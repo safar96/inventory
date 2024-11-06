@@ -5,27 +5,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import uz.inventory.app.config.JwtService;
 import uz.inventory.app.dto.auth.RegisterUserDto;
 import uz.inventory.app.dto.auth.SignInDto;
-import uz.inventory.app.entity.role.RoleEntity;
-import uz.inventory.app.entity.user.UserEntity;
 import uz.inventory.app.payload.ApiResponse;
-import uz.inventory.app.repository.role.RoleRepository;
-import uz.inventory.app.repository.user.UserRepository;
 import uz.inventory.app.service.auth.AuthService;
-
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -46,17 +35,15 @@ public class AuthController {
         return authService.registerUser(registerUserDto);
     }
 
-//    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-//    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null) {
-//            new SecurityContextLogoutHandler().logout(request, response, auth);
-//            UserEntity userPrincipal = (UserEntity) auth.getPrincipal();
-//            refreshTokenService.deleteByUserId(userPrincipal.getId());
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Log out successfully", true, 0));
-//    }
-//
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Log out successfully", true));
+    }
+
 
 
 
