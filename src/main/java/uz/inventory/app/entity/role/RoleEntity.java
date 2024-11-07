@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import uz.inventory.app.enums.RoleName;
 
 @Data
 @Entity
@@ -19,11 +18,10 @@ public class RoleEntity implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    private RoleName name;
+    private String name;
 
     @Override
     public String getAuthority() {
-        return name.name();
+        return name;
     }
 }

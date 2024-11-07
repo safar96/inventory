@@ -27,7 +27,6 @@ public class JitAuthenticationFilter extends OncePerRequestFilter {
     private final UserDTLService userDTLService;
 
 
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
@@ -51,6 +50,7 @@ public class JitAuthenticationFilter extends OncePerRequestFilter {
                     );
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     filterChain.doFilter(request, response);
+                    return;
                 }
             }
         } catch (Exception ex) {

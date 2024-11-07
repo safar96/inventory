@@ -53,7 +53,7 @@ public class UserEntity extends AbsEntity implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roleEntities;
     }
 
     @Override

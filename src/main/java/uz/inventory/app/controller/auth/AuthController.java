@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,9 +30,8 @@ public class AuthController {
         return authService.signIn(signInDto);
     }
 
-
     @PostMapping("/user/register")
-    public ApiResponse registerUser( @RequestBody RegisterUserDto registerUserDto) {
+    public ApiResponse registerUser(@RequestBody RegisterUserDto registerUserDto) {
         return authService.registerUser(registerUserDto);
     }
 
@@ -43,8 +43,6 @@ public class AuthController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Log out successfully", true));
     }
-
-
 
 
 }

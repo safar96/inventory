@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import uz.inventory.app.entity.role.RoleEntity;
 import uz.inventory.app.entity.user.UserEntity;
-import uz.inventory.app.enums.RoleName;
 import uz.inventory.app.repository.role.RoleRepository;
 import uz.inventory.app.repository.user.UserRepository;
 
@@ -29,19 +28,19 @@ public class DataLoader implements CommandLineRunner {
         if (initialMode.equals("always")) {
 
             roleRepository.save(
-                    new RoleEntity(1, RoleName.superAdmin)
+                    new RoleEntity(1, "ROLE_ADMIN")
             );
 
             roleRepository.save(
-                    new RoleEntity(2, RoleName.admin)
+                    new RoleEntity(2, "ROLE_USER")
             );
 
             roleRepository.save(
-                    new RoleEntity(3, RoleName.moderator)
+                    new RoleEntity(3, "ROLE_MODERATOR")
             );
 
             roleRepository.save(
-                    new RoleEntity(4, RoleName.user)
+                    new RoleEntity(4, "ROLE_SUPER_ADMIN")
             );
 
             userRepository.save(new UserEntity(
@@ -50,7 +49,7 @@ public class DataLoader implements CommandLineRunner {
                     "admin",
                     "123",
                     passwordEncoder.encode("admin"),
-                    roleRepository.findAllById(1)
+                    roleRepository.findAllById(4)
             ));
 
         }
