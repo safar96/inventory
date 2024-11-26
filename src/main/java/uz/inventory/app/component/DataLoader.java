@@ -49,7 +49,7 @@ public class DataLoader implements CommandLineRunner {
                     "admin",
                     "123",
                     passwordEncoder.encode("admin"),
-                    roleRepository.findAllById(4)
+                    roleRepository.findAllById(1)
             ));
 
         }
