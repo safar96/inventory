@@ -2,20 +2,17 @@ package uz.inventory.app.entity.company;
 
 import jakarta.persistence.*;
 import lombok.*;
+import uz.inventory.app.entity.template.AbsEntity;
 
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@Table(name = "companies")
+@Table(name = "company")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class CompanyEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CompanyEntity extends AbsEntity {
 
     @Column(name = "parent_id")
     private Long parent_id;
@@ -34,18 +31,5 @@ public class CompanyEntity {
 
     @Column(name = "condition_id")
     private Long conditionId;
-
-    @Column(name = "cr_by")
-
-    private Long crBy;
-
-    @Column(name = "cr_on", nullable = false)
-    private LocalDate crOn;
-
-    @Column(name = "up_by")
-    private Long upBy;
-
-    @Column(name = "up_on")
-    private LocalDate upOn;
 
 }

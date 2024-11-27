@@ -1,5 +1,6 @@
 package uz.inventory.app.service.company;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -17,9 +18,10 @@ import uz.inventory.app.repository.company.CompanyRepository;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyService {
-    @Autowired
-    private CompanyRepository companyRepository;
+
+   final private CompanyRepository companyRepository;
 
     public Page<CompanyEntity> getCompanies(PaginationRequestDto paginationRequestDto) {
         Pageable pageable = PageRequest.of(paginationRequestDto.getPage(), paginationRequestDto.getSize(),
@@ -53,8 +55,6 @@ public class CompanyService {
             company.setAddress(updatedCompany.getAddress());
             company.setState(updatedCompany.getState());
             company.setConditionId(updatedCompany.getConditionId());
-            company.setUpBy(updatedCompany.getUpBy());
-            company.setUpOn(updatedCompany.getUpOn());
             return companyRepository.save(company);
         }).orElseThrow(() -> new RuntimeException("Company not found with id " + id));
     }

@@ -1,12 +1,12 @@
 package uz.inventory.app.dto.company;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 public class CompanyDto {
     Long id;
     Long parent_id;

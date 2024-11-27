@@ -1,5 +1,6 @@
 package uz.inventory.app.controller.company;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.data.domain.Page;
@@ -11,11 +12,13 @@ import uz.inventory.app.service.company.CompanyService;
 
 import java.util.List;
 
+
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/company")
 public class CompanyController {
-    @Autowired
-    private CompanyService companyService;
+
+    final private CompanyService companyService;
 
     @PostMapping("/list")
     public Page<CompanyEntity> getPaginatedAndSortedCompanies(@RequestBody PaginationRequestDto paginationRequestDto) {
@@ -24,15 +27,13 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CompanyEntity> getCompanyById(@PathVariable Long id) {
-        System.out.println(id);
         return companyService.getCompanyById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/createCompany")
+    @PostMapping("/create")
     public CompanyEntity createCompany(@RequestBody CompanyEntity companyEntity) {
-        companyEntity.setCrOn(java.time.LocalDate.now());
         return companyService.saveCompany(companyEntity);
     }
 
