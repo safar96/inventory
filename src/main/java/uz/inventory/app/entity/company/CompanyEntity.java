@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import uz.inventory.app.entity.template.AbsEntity;
 
-import java.time.LocalDate;
-
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
