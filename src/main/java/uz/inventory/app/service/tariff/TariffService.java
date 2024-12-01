@@ -49,7 +49,6 @@ public class TariffService {
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(e.getMessage(), false));
         }
-
     }
 
     public ResponseEntity<?> updateTariff(TariffDto tariffDto) {

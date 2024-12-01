@@ -1,13 +1,13 @@
 package uz.inventory.app.entity.util;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "genders")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GendersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,4 +15,8 @@ public class GendersEntity {
 
     @Column(name = "name")
     private String name;
+
+    public GendersEntity(String name) {
+        this.name = name;
+    }
 }

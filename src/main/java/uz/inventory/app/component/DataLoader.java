@@ -7,8 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import uz.inventory.app.entity.role.RoleEntity;
 import uz.inventory.app.entity.user.UserEntity;
+import uz.inventory.app.entity.util.GendersEntity;
 import uz.inventory.app.repository.role.RoleRepository;
 import uz.inventory.app.repository.user.UserRepository;
+import uz.inventory.app.repository.utils.GenderRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -16,12 +18,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Value("${spring.sql.init.mode}")
     private String initialMode;
-
     private final UserRepository userRepository;
-
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final GenderRepository genderRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -51,6 +52,9 @@ public class DataLoader implements CommandLineRunner {
                     passwordEncoder.encode("admin"),
                     roleRepository.findAllById(1)
             ));
+
+            genderRepository.save(new GendersEntity("Erkak"));
+            genderRepository.save(new GendersEntity("Ayol"));
 
         }
     }

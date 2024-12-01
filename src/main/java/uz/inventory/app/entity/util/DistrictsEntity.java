@@ -15,4 +15,8 @@ public class DistrictsEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "region_id")
+    private Long regionId;
+
 }
