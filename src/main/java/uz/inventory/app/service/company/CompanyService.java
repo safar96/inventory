@@ -1,7 +1,6 @@
 package uz.inventory.app.service.company;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
@@ -10,34 +9,41 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import uz.inventory.app.dto.company.CompanySpecification;
-import uz.inventory.app.dto.company.PaginationRequestDto;
+import uz.inventory.app.component.SearchSpecification;
+import uz.inventory.app.dto.company.CompanyDto;
+import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.entity.company.CompanyEntity;
 import uz.inventory.app.repository.company.CompanyRepository;
+import uz.inventory.app.service.util.BaseService;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService {
+public class CompanyService extends BaseService {
 
-   final private CompanyRepository companyRepository;
+    final private CompanyRepository companyRepository;
 
-    public Page<CompanyEntity> getCompanies(PaginationRequestDto paginationRequestDto) {
-        Pageable pageable = PageRequest.of(paginationRequestDto.getPage(), paginationRequestDto.getSize(),
-                paginationRequestDto.getSortDir().equals("desc") ? Sort.by(Sort.Order.desc(paginationRequestDto.getSortBy())) :
-                        Sort.by(Sort.Order.asc(paginationRequestDto.getSortBy())));
-        Specification<CompanyEntity> specification = Specification.where(null);
-
-        if (paginationRequestDto.getName() != null && !paginationRequestDto.getName().isEmpty()) {
-            specification = specification.and(CompanySpecification.hasName(paginationRequestDto.getName()));
-        }
-        if (paginationRequestDto.getInn() != null && !paginationRequestDto.getInn().isEmpty()) {
-            specification = specification.and(CompanySpecification.hasInn(paginationRequestDto.getInn()));
-        }
-
-
-        return companyRepository.findAll(specification, pageable);
+    public Page<CompanyDto> getCompanies(PaginationRequestDto paginationRequestDto) {
+        String searchTerm = paginationRequestDto.getSearch(); // Get search term from request
+        String[] searchFields = {"name", "address", "inn"};
+        Specification<CompanyEntity> specification = SearchSpecification.containsSearchTerm(searchTerm, searchFields);
+        Pageable pageable = PageRequest.of(
+                paginationRequestDto.getPage(),  // Current page number
+                paginationRequestDto.getSize(),  // Number of items per page
+                Sort.by(Sort.Order.asc("name"))  // Sort by 'name' in ascending order
+        );
+        Page<CompanyEntity> companyPage = companyRepository.findAll(specification, pageable);
+        return companyPage.map(company -> {
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.setId(company.getId());
+            companyDto.setInn(company.getInn());
+            companyDto.setName(company.getName());
+            companyDto.setState(company.getState());
+            companyDto.setCondition_id(company.getConditionId());
+            companyDto.setAddress(company.getAddress());
+            return companyDto;
+        });
     }
 
     public Optional<CompanyEntity> getCompanyById(Long id) {

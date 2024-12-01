@@ -1,10 +1,8 @@
 package uz.inventory.app.dto.company;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.util.Date;
+
 
 @Data
 public class CompanyDto {
@@ -15,8 +13,4 @@ public class CompanyDto {
     String address;
     String state;
     Long condition_id;
-    Long cr_by;
-    Date cr_on;
-    Long up_by;
-    Date up_on;
 }

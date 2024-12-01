@@ -1,16 +1,14 @@
 package uz.inventory.app.controller.company;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.inventory.app.dto.company.PaginationRequestDto;
+import uz.inventory.app.dto.company.CompanyDto;
+import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.entity.company.CompanyEntity;
 import uz.inventory.app.service.company.CompanyService;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -21,8 +19,9 @@ public class CompanyController {
     final private CompanyService companyService;
 
     @PostMapping("/list")
-    public Page<CompanyEntity> getPaginatedAndSortedCompanies(@RequestBody PaginationRequestDto paginationRequestDto) {
-        return companyService.getCompanies(paginationRequestDto);
+    public ResponseEntity<Page<CompanyDto>> getCompanies(@RequestBody PaginationRequestDto paginationRequestDto) {
+        Page<CompanyDto> companies = companyService.getCompanies(paginationRequestDto);
+        return ResponseEntity.ok(companies);
     }
 
     @GetMapping("/{id}")

@@ -1,4 +1,4 @@
-package uz.inventory.app.dto.company;
+package uz.inventory.app.dto.util;
 
 import lombok.Data;
 
@@ -8,6 +8,6 @@ public class PaginationRequestDto {
     private int size;
     private String sortBy;   // Sort field
     private String sortDir;  // Sort direction (asc or desc)
-    private String name;     // Filter by name (optional)
-    private String inn;      // Filter by INN (optional)
+    private String search;     // Filter by all (optional)
+
 }
