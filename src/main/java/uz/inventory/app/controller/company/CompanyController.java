@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.inventory.app.dto.company.CompanyDto;
+import uz.inventory.app.dto.company.CompanyTariffDto;
+import uz.inventory.app.dto.tariff.TariffDto;
 import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.entity.company.CompanyEntity;
 import uz.inventory.app.service.company.CompanyService;
@@ -37,7 +39,7 @@ public class CompanyController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<CompanyEntity> updateCompany( @RequestBody CompanyEntity companyEntity) {
+    public ResponseEntity<CompanyEntity> updateCompany(@RequestBody CompanyEntity companyEntity) {
         try {
             Long id = companyEntity.getId();
             return ResponseEntity.ok(companyService.updateCompany(id, companyEntity));
@@ -58,5 +60,10 @@ public class CompanyController {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/save-tariff")
+    public ResponseEntity<?> saveTariff(@RequestBody CompanyTariffDto companyTariffDto) {
+        return companyService.setCompanyTariff(companyTariffDto);
     }
 }

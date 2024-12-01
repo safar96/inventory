@@ -2,7 +2,12 @@ package uz.inventory.app.entity.company;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
+import uz.inventory.app.entity.role.RoleEntity;
+import uz.inventory.app.entity.tariff.TariffEntity;
 import uz.inventory.app.entity.template.AbsEntity;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -29,5 +34,19 @@ public class CompanyEntity extends AbsEntity {
 
     @Column(name = "condition_id")
     private Long conditionId;
+
+    public CompanyEntity(String name, Long parent_id, String inn, String address, String state, Long conditionId) {
+        this.name = name;
+        this.parent_id = parent_id;
+        this.inn = inn;
+        this.address = address;
+        this.state = state;
+
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "company_tariff", joinColumns = {@JoinColumn(name = "company_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tariff_id")})
+    private TariffEntity tariff;
 
 }
