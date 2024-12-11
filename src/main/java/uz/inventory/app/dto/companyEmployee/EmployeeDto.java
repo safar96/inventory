@@ -1,13 +1,13 @@
 package uz.inventory.app.dto.companyEmployee;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import uz.inventory.app.dto.company.CompanyDto;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 public class EmployeeDto {
+    private Long id;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -15,5 +15,5 @@ public class EmployeeDto {
     private Date birthDate;
     private Long sectionId;
     private String state;
-    private Long companyId;
+    private CompanyDto company;
 }
