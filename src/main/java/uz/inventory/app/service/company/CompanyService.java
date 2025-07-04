@@ -83,24 +83,4 @@ public class CompanyService extends BaseService {
             throw new RuntimeException("Company not found with id " + id);
         }
     }
-
-    public ResponseEntity<?> setCompanyTariff(CompanyTariffDto companyTariffDto) {
-        try {
-            Optional<CompanyEntity> company = companyRepository.findById(companyTariffDto.getCompany_id());
-            if (company.isPresent()) {
-                Optional<TariffEntity> result = tariffRepository.findById(companyTariffDto.getTariff_id());
-                if (result.isPresent()) {
-                    company.get().setTariff(result.get());
-                    companyRepository.save(company.get());
-                    return new ResponseEntity<>(new ApiResponse("Muvafiqiyatli saqlandi", true), HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(new ApiResponse("Bunday tariff topilmadi", false), HttpStatus.OK);
-                }
-            } else {
-                return new ResponseEntity<>(new ApiResponse("Bunday companiya topilmadi", false), HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse(e.getMessage(), false), HttpStatus.OK);
-        }
-    }
 }

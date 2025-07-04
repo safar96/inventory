@@ -44,9 +44,4 @@ public class CompanyEntity extends AbsEntity {
 
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "company_tariff", joinColumns = {@JoinColumn(name = "company_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tariff_id")})
-    private TariffEntity tariff;
-
 }

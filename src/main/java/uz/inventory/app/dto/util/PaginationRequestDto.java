@@ -12,6 +12,6 @@ public class PaginationRequestDto {
     private int size;
     private String sortBy;   // Sort field
     private String sortDir;  // Sort direction (asc or desc)
-    private String search;     // Filter by all (optional)
+    private String search;    // Filter by all (optional)
 
 }
