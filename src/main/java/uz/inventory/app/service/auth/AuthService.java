@@ -1,6 +1,7 @@
 package uz.inventory.app.service.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ public class AuthService {
     private final JwtService jwtService;
 
     public ResponseEntity<?> signIn(SignInDto signInDto) {
-
         try {
             Optional<UserEntity> optionalUser = userRepository.findByUsername(signInDto.getUsername());
             if (optionalUser.isPresent()) {
@@ -41,14 +41,13 @@ public class AuthService {
                     signInResDto.setRole_names(user.getRoleEntities().stream().map((RoleEntity::getName)).toList());
                     return ResponseEntity.ok(signInResDto);
                 } else {
-                    return ResponseEntity.ok(new ApiResponse("Kiritilgan parol xato", false));
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse("Kiritilgan parol xato", false));
                 }
             } else {
-                return ResponseEntity.ok(new ApiResponse("Foydalanuvchi topilmadi", false));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Foydalanuvchi topilmadi", false));
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok("Error");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(e.getMessage(), false));
         }
     }
 
@@ -58,9 +57,9 @@ public class AuthService {
             return new ApiResponse("Bunday foydalanuvchi mavjud!!!", false);
         } else {
             userRepository.save(new UserEntity(
-                    userDto.getFirstName(),
-                    userDto.getMiddleName(),
-                    userDto.getLastName(),
+                    userDto.getFirst_name(),
+                    userDto.getMiddle_name(),
+                    userDto.getLast_name(),
                     userDto.getUsername(),
                     passwordEncoder.encode(userDto.getPassword()),
                     roleRepository.findAllById(1))

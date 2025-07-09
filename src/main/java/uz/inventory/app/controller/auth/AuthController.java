@@ -1,6 +1,7 @@
 package uz.inventory.app.controller.auth;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ import uz.inventory.app.service.auth.AuthService;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "User Management", description = "APIs for managing users")
 public class AuthController {
 
     private final AuthService authService;

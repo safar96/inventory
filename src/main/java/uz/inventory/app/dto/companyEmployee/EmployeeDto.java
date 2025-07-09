@@ -15,5 +15,5 @@ public class EmployeeDto {
     private Date birthDate;
     private Long sectionId;
     private String state;
-    private CompanyDto company;
+    private Long companyId;
 }
