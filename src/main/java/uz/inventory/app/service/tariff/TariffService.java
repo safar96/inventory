@@ -10,7 +10,7 @@ import uz.inventory.app.dto.tariff.TariffDto;
 import uz.inventory.app.dto.util.PaginationDto;
 import uz.inventory.app.entity.tariff.TariffEntity;
 import uz.inventory.app.enums.TariffDurationTypeEnum;
-import uz.inventory.app.payload.ApiResponse;
+import uz.inventory.app.payload.CustomApiResponse;
 import uz.inventory.app.repository.tariff.TariffRepository;
 import uz.inventory.app.service.UtilService;
 
@@ -45,9 +45,9 @@ public class TariffService {
             tariffEntity.setDurationType(TariffDurationTypeEnum.valueOf(tariffDto.getDuration_type()));
             tariffEntity.setDuration(tariffDto.getDuration());
             tariffRepository.save(tariffEntity);
-            return ResponseEntity.ok(new ApiResponse("Muvaffiqiyatli saqlandi", true));
+            return ResponseEntity.ok(new CustomApiResponse("Muvaffiqiyatli saqlandi", true));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), false));
+            return ResponseEntity.ok(new CustomApiResponse(e.getMessage(), false));
         }
     }
 
@@ -64,13 +64,13 @@ public class TariffService {
                     tariffRepository.save(tariffEntity);
                     return tariffEntity;
                 });
-                return ResponseEntity.ok(new ApiResponse("Muvaffiqiyatli almashtirildi", true));
+                return ResponseEntity.ok(new CustomApiResponse("Muvaffiqiyatli almashtirildi", true));
             } else {
-                return ResponseEntity.ok(new ApiResponse("Bunday tariff topilmadi", false));
+                return ResponseEntity.ok(new CustomApiResponse("Bunday tariff topilmadi", false));
             }
 
         } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), false));
+            return ResponseEntity.ok(new CustomApiResponse(e.getMessage(), false));
         }
     }
 
@@ -78,12 +78,12 @@ public class TariffService {
         try {
             if (tariffRepository.findById(id).isPresent()) {
                 tariffRepository.deleteById(id);
-                return ResponseEntity.ok(new ApiResponse("Muvaffiqiyatli o'chrildi", true));
+                return ResponseEntity.ok(new CustomApiResponse("Muvaffiqiyatli o'chrildi", true));
             }
-            return ResponseEntity.ok(new ApiResponse("Bunday tariff topilmadi", false));
+            return ResponseEntity.ok(new CustomApiResponse("Bunday tariff topilmadi", false));
 
         } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), false));
+            return ResponseEntity.ok(new CustomApiResponse(e.getMessage(), false));
         }
     }
 

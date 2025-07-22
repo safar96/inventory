@@ -3,15 +3,14 @@ package uz.inventory.app.service.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.inventory.app.config.JwtService;
-import uz.inventory.app.dto.auth.RegisterUserDto;
-import uz.inventory.app.dto.auth.SignInDto;
-import uz.inventory.app.dto.auth.SignInResDto;
+import uz.inventory.app.dto.auth.*;
 import uz.inventory.app.entity.role.RoleEntity;
 import uz.inventory.app.entity.user.UserEntity;
-import uz.inventory.app.payload.ApiResponse;
+import uz.inventory.app.payload.CustomApiResponse;
 import uz.inventory.app.repository.role.RoleRepository;
 import uz.inventory.app.repository.user.UserRepository;
 
@@ -24,6 +23,7 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserDTLService userDTLService;
 
     public ResponseEntity<?> signIn(SignInDto signInDto) {
         try {
@@ -37,24 +37,41 @@ public class AuthService {
                     signInResDto.setLast_name(user.getLastName());
                     signInResDto.setFirst_name(user.getFirstName());
                     signInResDto.setMiddle_name(user.getMiddleName());
-                    signInResDto.setToken(jwtService.generateToken(user));
+                    signInResDto.setAccess_token(jwtService.generateToken(user));
+                    signInResDto.setRefresh_token(jwtService.generateRefreshToken(user));
                     signInResDto.setRole_names(user.getRoleEntities().stream().map((RoleEntity::getName)).toList());
                     return ResponseEntity.ok(signInResDto);
                 } else {
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse("Kiritilgan parol xato", false));
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new CustomApiResponse("Kiritilgan parol xato", false));
                 }
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Foydalanuvchi topilmadi", false));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CustomApiResponse("Foydalanuvchi topilmadi", false));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(e.getMessage(), false));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new CustomApiResponse(e.getMessage(), false));
         }
     }
 
-    public ApiResponse registerUser(RegisterUserDto userDto) {
+    public ResponseEntity<?> refresh(RefreshTokenDto refreshTokenDto) {
+        if (jwtService.isTokenExpired(refreshTokenDto.getToken())) {
+            String username = jwtService.extractUsername(refreshTokenDto.getToken());
+            UserDetails user = userDTLService.loadUserByUsername(username);
+            String newAccessToken = jwtService.generateToken(user);
+            String newRefreshToken = jwtService.generateRefreshToken(user);
+
+            ResRefreshToken resRefreshToken = new ResRefreshToken();
+            resRefreshToken.setRefresh_token(newRefreshToken);
+            resRefreshToken.setAccess_token(newAccessToken);
+            return ResponseEntity.ok(resRefreshToken);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new CustomApiResponse("Refresh token is expired", false));
+        }
+    }
+
+    public CustomApiResponse registerUser(RegisterUserDto userDto) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
         if (optionalUser.isPresent()) {
-            return new ApiResponse("Bunday foydalanuvchi mavjud!!!", false);
+            return new CustomApiResponse("Bunday foydalanuvchi mavjud!!!", false);
         } else {
             userRepository.save(new UserEntity(
                     userDto.getFirst_name(),
@@ -64,7 +81,7 @@ public class AuthService {
                     passwordEncoder.encode(userDto.getPassword()),
                     roleRepository.findAllById(1))
             );
-            return new ApiResponse("Muvaffiqiyatli saqlandi", true);
+            return new CustomApiResponse("Muvaffiqiyatli saqlandi", true);
         }
     }
 }

@@ -1,10 +1,10 @@
-package uz.inventory.app.controller.companyEmployee;
+package uz.inventory.app.controller.employee;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.inventory.app.service.companyEmployee.EmployeeService;
+import uz.inventory.app.service.employee.EmployeeService;
 
 @RestController
 @RequestMapping("/company/employee")

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import uz.inventory.app.dto.company.CompanyDto;
 import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.entity.company.CompanyEntity;
-import uz.inventory.app.payload.ApiResponse;
+import uz.inventory.app.payload.CustomApiResponse;
 import uz.inventory.app.service.company.CompanyService;
 
 
@@ -33,23 +33,23 @@ public class CompanyController {
     }
 
     @PostMapping("/create")
-    public ApiResponse createCompany(@RequestBody CompanyEntity companyEntity) {
+    public CustomApiResponse createCompany(@RequestBody CompanyEntity companyEntity) {
         try {
             CompanyEntity savedCompany = companyService.saveCompany(companyEntity);
-            return new ApiResponse("Company created successfully! ID: " + savedCompany.getId(), true);
+            return new CustomApiResponse("Company created successfully! ID: " + savedCompany.getId(), true);
         } catch (Exception e) {
-            return new ApiResponse("Failed to create company: " + e.getMessage(), false);
+            return new CustomApiResponse("Failed to create company: " + e.getMessage(), false);
         }
     }
 
     @PostMapping("/update")
-    public ApiResponse updateCompany(@RequestBody CompanyEntity companyEntity) {
+    public CustomApiResponse updateCompany(@RequestBody CompanyEntity companyEntity) {
         try {
             Long id = companyEntity.getId();
             CompanyEntity updatedCompany = companyService.updateCompany(id, companyEntity);
-            return new ApiResponse("Company updated successfully! ID: " + updatedCompany.getId(), true);
+            return new CustomApiResponse("Company updated successfully! ID: " + updatedCompany.getId(), true);
         } catch (RuntimeException e) {
-            return new ApiResponse("Failed to update company: " + e.getMessage(), false);
+            return new CustomApiResponse("Failed to update company: " + e.getMessage(), false);
         }
     }
 

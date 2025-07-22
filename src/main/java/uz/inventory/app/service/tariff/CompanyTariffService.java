@@ -9,7 +9,7 @@ import uz.inventory.app.entity.company.CompanyEntity;
 import uz.inventory.app.entity.tariff.CompanyTariffEntity;
 import uz.inventory.app.entity.tariff.TariffEntity;
 import uz.inventory.app.enums.TariffDurationTypeEnum;
-import uz.inventory.app.payload.ApiResponse;
+import uz.inventory.app.payload.CustomApiResponse;
 import uz.inventory.app.repository.company.CompanyRepository;
 import uz.inventory.app.repository.tariff.CompanyTariffRepository;
 import uz.inventory.app.repository.tariff.TariffRepository;
@@ -53,16 +53,16 @@ public class CompanyTariffService {
                    companyTariffEntity.setState("A");
                    companyTariffEntity.setExpireDate(getExpireDate(tariffEntity.getDurationType(),tariffEntity.getDuration()));
                    companyTariffRepository.save(companyTariffEntity);
-                   return new ResponseEntity<>(new ApiResponse("Muvaffiqiyatli saqlandi",true), HttpStatus.OK);
+                   return new ResponseEntity<>(new CustomApiResponse("Muvaffiqiyatli saqlandi",true), HttpStatus.OK);
                }else {
-                   return new ResponseEntity<>(new ApiResponse("Bunday tariff topilmadi",false), HttpStatus.NOT_FOUND);
+                   return new ResponseEntity<>(new CustomApiResponse("Bunday tariff topilmadi",false), HttpStatus.NOT_FOUND);
                }
 
            }else {
-               return new ResponseEntity<>(new ApiResponse("Bunday kompaniya topilmadi",false), HttpStatus.NOT_FOUND);
+               return new ResponseEntity<>(new CustomApiResponse("Bunday kompaniya topilmadi",false), HttpStatus.NOT_FOUND);
            }
        }catch (Exception e){
-           return new ResponseEntity<>(new ApiResponse(e.getMessage(),false), HttpStatus.CONFLICT);
+           return new ResponseEntity<>(new CustomApiResponse(e.getMessage(),false), HttpStatus.CONFLICT);
        }
    }
 

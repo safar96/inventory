@@ -1,4 +1,4 @@
-package uz.inventory.app.entity.companyEmployee;
+package uz.inventory.app.entity.employee;
 
 import jakarta.persistence.*;
 import lombok.*;

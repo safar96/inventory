@@ -1,19 +1,15 @@
-package uz.inventory.app.service.companyEmployee;
+package uz.inventory.app.service.employee;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.dto.companyEmployee.EmployeeDto;
-import uz.inventory.app.dto.companyEmployee.EmployeeSpecification;
 import uz.inventory.app.entity.company.CompanyEntity;
-import uz.inventory.app.entity.companyEmployee.EmployeeEntity;
-import uz.inventory.app.repository.companyEmployee.EmployeeRepository;
+import uz.inventory.app.entity.employee.EmployeeEntity;
+import uz.inventory.app.repository.employee.EmployeeRepository;
 import uz.inventory.app.repository.company.CompanyRepository;
 
 @Service

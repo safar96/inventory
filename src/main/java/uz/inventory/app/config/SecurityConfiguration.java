@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import uz.inventory.app.payload.ApiResponse;
+import uz.inventory.app.payload.CustomApiResponse;
 
 
 @Configuration
@@ -62,12 +60,12 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint((request, response, accessDeniedException) -> {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.getOutputStream().println(objectMapper.writeValueAsString(new ApiResponse("Sizda bu operatsiyani bajarishga ruxsat yo'q!!!", false)));
+                            response.getOutputStream().println(objectMapper.writeValueAsString(new CustomApiResponse("Sizda bu operatsiyani bajarishga ruxsat yo'q!!!", false)));
                         })
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.getOutputStream().println(objectMapper.writeValueAsString(new ApiResponse("Sizda bu operatsiyani bajarishga ruxsat yo'q!!!", false)));
+                            response.getOutputStream().println(objectMapper.writeValueAsString(new CustomApiResponse("Sizda bu operatsiyani bajarishga ruxsat yo'q!!!", false)));
                         }))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

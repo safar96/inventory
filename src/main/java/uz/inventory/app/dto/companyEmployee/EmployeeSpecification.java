@@ -1,7 +1,7 @@
 package uz.inventory.app.dto.companyEmployee;
 
 import org.springframework.data.jpa.domain.Specification;
-import uz.inventory.app.entity.companyEmployee.EmployeeEntity;
+import uz.inventory.app.entity.employee.EmployeeEntity;
 
 public class EmployeeSpecification {
     // Filter by company name
