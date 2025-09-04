@@ -15,11 +15,13 @@ public class RegisterUserDto {
 
     @NotBlank
     @NotNull
-    private String middle_name;
+    @JsonProperty("middle_name")
+    private String middleName;
 
     @NotBlank
     @NotNull
-    private String last_name;
+    @JsonProperty("last_name")
+    private String lastName;
 
     @NotBlank
     @NotNull

@@ -35,7 +35,7 @@ public class AuthController {
     @Operation(summary = "Login to account")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SignInResDto.class))}),
-            @ApiResponse(responseCode = "403", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
+            @ApiResponse(responseCode = "400", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
             @ApiResponse(responseCode = "404", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
             @ApiResponse(responseCode = "409", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
     })
@@ -45,7 +45,7 @@ public class AuthController {
 
 
     @PostMapping("/refresh/token")
-    @Operation(summary = "Changes access token")
+    @Operation(summary = "Change access token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResRefreshToken.class))}),
             @ApiResponse(responseCode = "401", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
@@ -56,7 +56,12 @@ public class AuthController {
 
 
     @PostMapping("/user/register")
-    public CustomApiResponse registerUser(@RequestBody RegisterUserDto registerUserDto) {
+    @Operation(summary = "Register new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResRefreshToken.class))}),
+            @ApiResponse(responseCode = "409", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.class))}),
+    })
+    public ResponseEntity<?> registerUser(@RequestBody RegisterUserDto registerUserDto) {
         return authService.registerUser(registerUserDto);
     }
 

@@ -42,7 +42,7 @@ public class AuthService {
                     signInResDto.setRole_names(user.getRoleEntities().stream().map((RoleEntity::getName)).toList());
                     return ResponseEntity.ok(signInResDto);
                 } else {
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new CustomApiResponse("Kiritilgan parol xato", false));
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomApiResponse("Kiritilgan parol xato", false));
                 }
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CustomApiResponse("Foydalanuvchi topilmadi", false));
@@ -68,20 +68,20 @@ public class AuthService {
         }
     }
 
-    public CustomApiResponse registerUser(RegisterUserDto userDto) {
+    public ResponseEntity<?> registerUser(RegisterUserDto userDto) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userDto.getUsername());
         if (optionalUser.isPresent()) {
-            return new CustomApiResponse("Bunday foydalanuvchi mavjud!!!", false);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new CustomApiResponse("Bunday foydalanuvchi mavjud!!!", false));
         } else {
             userRepository.save(new UserEntity(
-                    userDto.getFirst_name(),
-                    userDto.getMiddle_name(),
-                    userDto.getLast_name(),
+                    userDto.getFirstName(),
+                    userDto.getMiddleName(),
+                    userDto.getLastName(),
                     userDto.getUsername(),
                     passwordEncoder.encode(userDto.getPassword()),
                     roleRepository.findAllById(1))
             );
-            return new CustomApiResponse("Muvaffiqiyatli saqlandi", true);
+            return ResponseEntity.ok(new CustomApiResponse("Muvaffiqiyatli saqlandi", true));
         }
     }
 }
