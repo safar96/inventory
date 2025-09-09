@@ -10,8 +10,5 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 public class PaginationRequestDto {
     private int page;
     private int size;
-    private String sortBy;   // Sort field
-    private String sortDir;  // Sort direction (asc or desc)
-    private String search;    // Filter by all (optional)
-
+    private String search;
 }

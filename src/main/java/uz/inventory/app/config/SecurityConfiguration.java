@@ -51,7 +51,7 @@ public class SecurityConfiguration {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/auth/user/register").hasAnyRole("ADMIN")
+                        .requestMatchers("/auth/user/register","/role/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

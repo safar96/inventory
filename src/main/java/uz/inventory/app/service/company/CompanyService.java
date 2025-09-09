@@ -15,16 +15,16 @@ import uz.inventory.app.dto.util.PaginationRequestDto;
 import uz.inventory.app.entity.company.CompanyEntity;
 import uz.inventory.app.repository.company.CompanyRepository;
 import uz.inventory.app.repository.tariff.TariffRepository;
-import uz.inventory.app.service.util.BaseService;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService extends BaseService {
+public class CompanyService {
 
     final private CompanyRepository companyRepository;
     final private TariffRepository tariffRepository;
+
 
     public Page<CompanyDto> getCompanies(PaginationRequestDto paginationRequestDto) {
         String searchTerm = paginationRequestDto.getSearch(); // Get search term from request

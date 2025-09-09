@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class RolesDto {
-    private Long id;
+    private int id;
     private String name;
-    private String state;
 }
