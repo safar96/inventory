@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import uz.inventory.app.service.auth.AuthService;
-import uz.inventory.app.service.auth.UserDTLService;
+import uz.inventory.app.auth.service.AuthService;
+import uz.inventory.app.auth.service.UserDTLService;
 
 import java.io.IOException;
 
@@ -54,6 +54,7 @@ public class JitAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception ex) {
+
 //            ex.printStackTrace();
             logger.error("Could not set user authentication in security context", ex);
         }
