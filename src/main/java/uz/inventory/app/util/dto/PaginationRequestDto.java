@@ -1,0 +1,14 @@
+package uz.inventory.app.util.dto;
+
+import lombok.Data;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+
+import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
+
+@Data
+@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
+public class PaginationRequestDto {
+    private int page;
+    private int size;
+    private String search;
+}

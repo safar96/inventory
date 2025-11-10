@@ -5,7 +5,7 @@ package uz.inventory.app.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import uz.inventory.app.entity.user.UserEntity;
+import uz.inventory.app.user.entity.UserEntity;
 
 import java.time.Instant;
 

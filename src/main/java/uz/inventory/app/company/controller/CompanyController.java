@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.inventory.app.company.dto.CompanyDto;
-import uz.inventory.app.dto.util.PaginationRequestDto;
+import uz.inventory.app.util.dto.PaginationRequestDto;
 import uz.inventory.app.company.entity.CompanyEntity;
-import uz.inventory.app.payload.CustomApiResponse;
+import uz.inventory.app.core.payload.CustomApiResponse;
 import uz.inventory.app.company.service.CompanyService;
 
 

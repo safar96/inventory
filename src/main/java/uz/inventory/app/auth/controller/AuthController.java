@@ -18,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import uz.inventory.app.auth.dto.*;
-import uz.inventory.app.payload.CustomApiResponse;
+import uz.inventory.app.core.payload.CustomApiResponse;
 import uz.inventory.app.auth.service.AuthService;
 
 @CrossOrigin
@@ -31,7 +31,7 @@ public class AuthController {
     private final AuthService authService;
 
 
-    @PostMapping("/signIn")
+    @PostMapping("/login")
     @Operation(summary = "Login to account")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SignInResDto.class))}),

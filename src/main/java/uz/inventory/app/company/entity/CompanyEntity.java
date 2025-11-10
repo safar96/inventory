@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.inventory.app.entity.template.AbsEntity;
+import uz.inventory.app.core.entity.template.AbsEntity;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity

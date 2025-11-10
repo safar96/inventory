@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.inventory.app.config.JwtService;
+import uz.inventory.app.core.config.JwtService;
 import uz.inventory.app.auth.dto.*;
-import uz.inventory.app.entity.role.RoleEntity;
-import uz.inventory.app.entity.user.UserEntity;
-import uz.inventory.app.payload.CustomApiResponse;
-import uz.inventory.app.repository.role.RoleRepository;
-import uz.inventory.app.repository.user.UserRepository;
+import uz.inventory.app.auth.entity.RoleEntity;
+import uz.inventory.app.user.entity.UserEntity;
+import uz.inventory.app.core.payload.CustomApiResponse;
+import uz.inventory.app.auth.repository.RoleRepository;
+import uz.inventory.app.user.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -27,6 +27,7 @@ public class AuthService {
 
     public ResponseEntity<?> signIn(SignInDto signInDto) {
         try {
+            System.out.println(signInDto);
             Optional<UserEntity> optionalUser = userRepository.findByUsername(signInDto.getUsername());
             if (optionalUser.isPresent()) {
                 UserEntity user = optionalUser.get();

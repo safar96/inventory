@@ -3,7 +3,7 @@ package uz.inventory.app.employee.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import uz.inventory.app.company.entity.CompanyEntity;
-import uz.inventory.app.entity.template.AbsEntity;
+import uz.inventory.app.core.entity.template.AbsEntity;
 
 import java.util.Date;
 

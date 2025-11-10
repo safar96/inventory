@@ -9,12 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import uz.inventory.app.component.SearchSpecification;
+import uz.inventory.app.core.component.SearchSpecification;
 import uz.inventory.app.company.dto.CompanyDto;
-import uz.inventory.app.dto.util.PaginationRequestDto;
+import uz.inventory.app.util.dto.PaginationRequestDto;
 import uz.inventory.app.company.entity.CompanyEntity;
 import uz.inventory.app.company.repository.CompanyRepository;
-import uz.inventory.app.repository.tariff.TariffRepository;
+
 
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class CompanyService {
 
     final private CompanyRepository companyRepository;
-    final private TariffRepository tariffRepository;
+
 
 
     public Page<CompanyDto> getCompanies(PaginationRequestDto paginationRequestDto) {
