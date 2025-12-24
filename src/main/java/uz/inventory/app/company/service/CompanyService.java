@@ -1,8 +1,6 @@
 package uz.inventory.app.company.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +40,9 @@ public class CompanyService {
             companyDto.setInn(company.getInn());
             companyDto.setName(company.getName());
             companyDto.setState(company.getState());
-            companyDto.setCondition_id(company.getConditionId());
+            if (company.getCondition() != null) {
+                companyDto.setCondition_id(company.getCondition().getId());
+            }
             companyDto.setAddress(company.getAddress());
             return companyDto;
         });
@@ -62,18 +62,15 @@ public class CompanyService {
             company.setInn(updatedCompany.getInn());
             company.setAddress(updatedCompany.getAddress());
             company.setState(updatedCompany.getState());
-            company.setConditionId(updatedCompany.getConditionId());
+            company.setCondition(updatedCompany.getCondition());
             return companyRepository.save(company);
         }).orElseThrow(() -> new RuntimeException("Company not found with id " + id));
     }
 
-    public String deleteCompany(Long id) throws JSONException {
-        JSONObject res = new JSONObject();
+    public String deleteCompany(Long id) {
         if (companyRepository.existsById(id)) {
             companyRepository.deleteById(id);
-            res.put("success", true);
-            res.put("msg", "Company successfully deleted");
-            return res.toString();
+            return "Company successfully deleted";
         } else {
             throw new RuntimeException("Company not found with id " + id);
         }

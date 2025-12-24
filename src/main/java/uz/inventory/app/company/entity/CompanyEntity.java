@@ -1,8 +1,6 @@
 package uz.inventory.app.company.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,8 +30,9 @@ public class CompanyEntity extends AbsEntity {
     @Column(name = "state")
     private String state;
 
-    @Column(name = "condition_id")
-    private Long conditionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "condition_id")
+    private CompanyConditionEntity condition;
 
     public CompanyEntity(String name, Long parent_id, String inn, String address, String state, Long conditionId) {
         this.name = name;

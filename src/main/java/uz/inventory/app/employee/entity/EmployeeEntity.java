@@ -3,6 +3,7 @@ package uz.inventory.app.employee.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import uz.inventory.app.company.entity.CompanyEntity;
+import uz.inventory.app.section.entity.SectionEntity;
 import uz.inventory.app.core.entity.template.AbsEntity;
 
 import java.util.Date;
@@ -33,8 +34,9 @@ public class EmployeeEntity extends AbsEntity {
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column(name = "section_id")
-    private Long sectionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private SectionEntity section;
 
     @Column(name="state")
     private String state;

@@ -1,7 +1,6 @@
 package uz.inventory.app.company.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,8 +61,6 @@ public class CompanyController {
             return ResponseEntity.ok(message);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(404).body(ex.getMessage());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
     }
 }

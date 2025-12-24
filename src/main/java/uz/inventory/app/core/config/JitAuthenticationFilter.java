@@ -32,6 +32,7 @@ public class JitAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String jwt = getJwtFromRequest(request);
+            logger.info("Received JWT: " + (jwt != null ? jwt : "null"));
             if (!StringUtils.hasText(jwt)) {
                 filterChain.doFilter(request, response);
                 return;
@@ -52,8 +53,7 @@ public class JitAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception ex) {
-
-//            ex.printStackTrace();
+            ex.printStackTrace();
             logger.error("Could not set user authentication in security context", ex);
         }
         filterChain.doFilter(request, response);

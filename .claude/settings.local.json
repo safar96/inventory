@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run:*)",
+      "Bash(mvn clean install:*)",
+      "Bash(mvn clean package:*)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(pkill:*)",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3NjY1NDEwMTksImV4cCI6MTc2NzE0NTgxOX0.O7BJ7UQSdO9ZMxmL8U9zGSa8FkiW1ucnk3NZPwe4-Rg\")",
+      "Bash(git add:*)"
+    ]
+  }
+}
